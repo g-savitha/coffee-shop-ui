@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Determine the API URL based on environment variable
-const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+const API_URL = import.meta.env.VITE_API_URL;
 
 console.log('API Configuration:', {
   baseURL: API_URL,
@@ -29,7 +29,7 @@ api.interceptors.request.use((config) => {
     // Make sure Authorization header is properly set
     config.headers = {
       ...config.headers,
-      'Authorization': `Bearer ${token}`
+      'Authorize': `Bearer ${token}`
     };
     
     console.log('Token added to request:', {
