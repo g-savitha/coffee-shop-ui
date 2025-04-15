@@ -1,22 +1,20 @@
 import axios from "axios";
 
-// Determine the API URL based on environment
-// After fixing the port conflict, backend should be on 3001
-const API_URL = process.env.NODE_ENV === 'production'
-  ? '/api' // In production, the backend serves the frontend, so we use a relative path
-  : 'http://localhost:3001/api'; // Backend should be running on port 3001 now
+// Determine the API URL based on environment variable
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 console.log('API URL:', API_URL);
 
 const api = axios.create({
-  baseURL: API_URL
+  baseURL: API_URL,
+  withCredentials: true // Enable sending cookies in cross-origin requests
 });
 
 // Add token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
-    config.headers.Authorize = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`; // Fixed header name from 'Authorize' to 'Authorization'
   }
   return config;
 },
@@ -29,7 +27,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error('API Error:', error.response?.data || error.message);
+    console.error('API Error:', error.response || error);
     return Promise.reject(error);
   }
 );
