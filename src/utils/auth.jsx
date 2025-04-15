@@ -5,7 +5,7 @@ export const login = async (username, password) => {
     console.log('Attempting login with:', { username });
     console.log('API URL:', import.meta.env.VITE_API_URL);
     
-    const response = await api.post('/auth/login', { username, password });
+    const response = await api.post('/api/auth/login', { username, password });
     console.log('Login response:', {
       hasToken: !!response.data.token,
       tokenLength: response.data.token?.length,
@@ -33,7 +33,7 @@ export const login = async (username, password) => {
       message: error.message,
       response: error.response?.data,
       status: error.response?.status,
-      endpoint: '/auth/login'
+      endpoint: '/api/auth/login'
     });
     throw error;
   }
