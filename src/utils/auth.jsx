@@ -6,10 +6,22 @@ export const login = async (username, password) => {
     console.log('API URL:', import.meta.env.VITE_API_URL);
     
     const response = await api.post('/auth/login', { username, password });
-    console.log('Login response:', response.data);
+    console.log('Login response:', {
+      hasToken: !!response.data.token,
+      tokenLength: response.data.token?.length,
+      staff: response.data.staff
+    });
     
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('user', JSON.stringify(response.data.staff));
+    
+    // Verify token was stored
+    const storedToken = localStorage.getItem('token');
+    console.log('Stored token verification:', {
+      hasToken: !!storedToken,
+      tokenLength: storedToken?.length
+    });
+    
     return response.data;
   }
   catch (error) {
@@ -29,9 +41,21 @@ export const logout = () => {
 
 export const getUser = () => {
   const user = localStorage.getItem('user');
+  const token = localStorage.getItem('token');
+  console.log('Current auth state:', {
+    hasUser: !!user,
+    hasToken: !!token,
+    tokenLength: token?.length,
+    user: user ? JSON.parse(user) : null
+  });
   return user ? JSON.parse(user) : null;
 }
 
 export const isAuthenticated = () => {
-  return localStorage.getItem('token') !== null;
+  const token = localStorage.getItem('token');
+  console.log('Checking authentication:', {
+    hasToken: !!token,
+    tokenLength: token?.length
+  });
+  return token !== null;
 }
