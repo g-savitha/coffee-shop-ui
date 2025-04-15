@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://coffee-shop-backend-production-1275.up.railway.app/:path*"
+      "destination": "https://coffee-shop-backend-production-1275.up.railway.app/api/:path*"
     }
   ],
   "headers": [
