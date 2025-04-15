@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Determine the API URL based on environment variable
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 console.log('API Configuration:', {
   baseURL: API_URL,
@@ -21,7 +21,8 @@ api.interceptors.request.use((config) => {
     method: config.method,
     hasToken: !!token,
     tokenLength: token?.length,
-    currentHeaders: config.headers
+    currentHeaders: config.headers,
+    fullUrl: `${API_URL}${config.url}`
   });
 
   if (token) {
@@ -69,7 +70,8 @@ api.interceptors.response.use(
       status: error.response?.status,
       data: error.response?.data,
       message: error.message,
-      requestHeaders: error.config?.headers
+      requestHeaders: error.config?.headers,
+      fullUrl: error.config ? `${API_URL}${error.config.url}` : null
     });
     return Promise.reject(error);
   }

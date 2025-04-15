@@ -12,6 +12,10 @@ export const login = async (username, password) => {
       staff: response.data.staff
     });
     
+    if (!response.data.token) {
+      throw new Error('No token received from server');
+    }
+    
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('user', JSON.stringify(response.data.staff));
     
@@ -28,7 +32,8 @@ export const login = async (username, password) => {
     console.error('Login error:', {
       message: error.message,
       response: error.response?.data,
-      status: error.response?.status
+      status: error.response?.status,
+      endpoint: '/auth/login'
     });
     throw error;
   }
