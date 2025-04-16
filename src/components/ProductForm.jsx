@@ -63,7 +63,7 @@ const ProductForm = () => {
         </div>
 
         <div className="mb-3">
-          <label htmlFor="price" className="form-label">Price</label>
+          <label htmlFor="price" className="form-label">Price (₹)</label>
           <input
             type="number"
             step="0.01"

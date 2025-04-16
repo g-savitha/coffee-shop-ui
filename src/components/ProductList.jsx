@@ -90,7 +90,7 @@ const ProductList = () => {
           {products.map(product => (
             <tr key={product.id}>
               <td>{product.name}</td>
-              <td>${product.price}</td>
+              <td>₹{product.price}</td>
               <td>{product.category}</td>
               <td>
                 <span className={`badge ${product.availability ? 'bg-success' : 'bg-danger'}`}>
