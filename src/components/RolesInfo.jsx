@@ -7,93 +7,54 @@ const RolesInfo = () => {
   const roles = [
     {
       name: 'Owner',
-      description: 'Has full access to all features and can override most restrictions.',
+      description: 'Has full access to all features.',
       rbacPermissions: [
-        'manage_staff', 'manage_products', 'manage_prices', 
-        'view_reports', 'manage_store'
-      ],
-      abacCapabilities: [
-        'Can modify all products regardless of creator',
-        'Can work outside assigned shift hours',
-        'Can modify specialty items regardless of training level',
-        'Can modify limited-time offers',
-        'Not restricted by time of day or current shift'
+        'manage_products', 'update_availability'
       ],
       canDo: [
         'Create new products',
         'Delete any product',
-        'Modify any product, including specialty items',
-        'Change prices at any time',
+        'Modify any product',
         'Update product availability',
-        'Access all parts of the system 24/7',
-        'Override most restrictions'
+        'Has all permissions by default'
       ],
       badgeColor: 'danger'
     },
     {
       name: 'Store Manager',
-      description: 'Manages store operations and has broad access to product management.',
+      description: 'Manages products and inventory.',
       rbacPermissions: [
-        'manage_products', 'manage_prices', 
-        'view_reports', 'manage_schedule'
-      ],
-      abacCapabilities: [
-        'Can modify any product regardless of creator',
-        'Can work outside assigned shift hours',
-        'Can modify specialty items regardless of training level',
-        'Can modify limited-time offers',
-        'Has flexibility with time-based restrictions'
+        'manage_products', 'update_availability'
       ],
       canDo: [
         'Create new products',
         'Delete products',
-        'Update any product details',
-        'Modify specialty items',
-        'Change prices',
-        'Update product availability',
-        'Work outside their assigned shift'
+        'Update product availability'
       ],
       badgeColor: 'primary'
     },
     {
       name: 'Shift Manager',
-      description: 'Manages day-to-day operations during their assigned shift.',
+      description: 'Manages day-to-day operations.',
       rbacPermissions: [
-        'update_products', 'view_reports', 'manage_shift'
-      ],
-      abacCapabilities: [
-        'Can only modify regular products (not specialty items without sufficient training)',
-        'Cannot modify products outside their shift hours',
-        'Can modify limited-time offers only if they created them',
-        'Subject to time-of-day restrictions based on assigned shift'
+        'update_availability'
       ],
       canDo: [
-        'Update regular product details during their shift',
-        'Modify specialty items only with training level ≥ 3 AND if they created the item',
         'Update product availability',
-        'Cannot create or delete products',
-        'Cannot work outside assigned shift hours'
+        'Cannot create or delete products'
       ],
       badgeColor: 'success'
     },
     {
       name: 'Barista',
-      description: 'Front-line staff with limited system access focused on product availability.',
+      description: 'Front-line staff with limited system access.',
       rbacPermissions: [
-        'view_products', 'update_availability'
-      ],
-      abacCapabilities: [
-        'Very limited ability to modify products (mostly just availability)',
-        'Cannot work outside assigned shift',
-        'Cannot modify specialty items without high training',
-        'Subject to strict time-of-day restrictions'
+        'update_availability'
       ],
       canDo: [
         'View all products',
         'Update product availability (mark items as in/out of stock)',
-        'Cannot change product details, prices, or categories',
-        'Cannot create or delete products',
-        'Cannot work outside assigned shift'
+        'Cannot create or delete products'
       ],
       badgeColor: 'info'
     }
@@ -103,16 +64,14 @@ const RolesInfo = () => {
     <div className="container my-4">
       <Card>
         <Card.Header as="h4" className="text-center bg-dark text-white">
-          Role Permissions &amp; Access Control System
+          Role-Based Access Control System
         </Card.Header>
         <Card.Body>
           <p className="lead">
-            This application demonstrates both Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC).
+            This application demonstrates Role-Based Access Control (RBAC).
           </p>
           <p>
             <strong>RBAC</strong>: Permissions are assigned to roles, and users inherit permissions from their role.
-            <br />
-            <strong>ABAC</strong>: Access is determined dynamically based on attributes of the user, resource, action, and environment.
           </p>
 
           <h5 className="mt-4">Available Roles:</h5>
@@ -143,13 +102,6 @@ const RolesInfo = () => {
                       <Badge key={i} bg="secondary" className="me-2 mb-1">{perm}</Badge>
                     ))}
                   </div>
-
-                  <h6 className="mt-3">ABAC Capabilities:</h6>
-                  <ul className="small">
-                    {role.abacCapabilities.map((cap, i) => (
-                      <li key={i}>{cap}</li>
-                    ))}
-                  </ul>
 
                   <h6 className="mt-3">In Practice, {role.name}s Can:</h6>
                   <ul className="small">

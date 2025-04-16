@@ -46,7 +46,20 @@ const NavBar = () => {
                 <li className="nav-item">
                   <span className="nav-link">
                     <i className="bi bi-person-badge me-1"></i> 
-                    {user.username} ({user.role})
+                    {user.username} ({user.role}) 
+                    {/* Display active permissions based on role */}
+                    {user.role === 'owner' && (
+                      <small className="ms-1 text-light-emphasis">[All Permissions]</small>
+                    )}
+                    {user.role === 'store_manager' && (
+                      <small className="ms-1 text-light-emphasis">[Manage Products]</small>
+                    )}
+                    {user.role === 'shift_manager' && (
+                      <small className="ms-1 text-light-emphasis">[Update Availability]</small>
+                    )}
+                    {user.role === 'barista' && (
+                      <small className="ms-1 text-light-emphasis">[Update Availability]</small>
+                    )}
                   </span>
                 </li>
                 <li className="nav-item">
