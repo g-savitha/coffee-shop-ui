@@ -7,10 +7,7 @@ import ProductList from './components/ProductList.jsx';
 import ProductForm from './components/ProductForm.jsx';
 import ProductEdit from './components/ProductEdit.jsx';
 import RolesInfo from './components/RolesInfo.jsx';
-import InventoryManagement from './components/management/InventoryManagement.jsx';
 import StaffManagement from './components/management/StaffManagement.jsx';
-import StoreSettings from './components/management/StoreSettings.jsx';
-import ReportsView from './components/management/ReportsView.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Protected route component
@@ -59,27 +56,9 @@ function App() {
         } />
 
         {/* Management Routes */}
-        <Route path="/management/inventory" element={
-          <ProtectedRoute allowedRoles={['owner', 'store_manager', 'shift_manager']}>
-            <InventoryManagement />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/management/reports" element={
-          <ProtectedRoute allowedRoles={['owner', 'store_manager', 'shift_manager']}>
-            <ReportsView />
-          </ProtectedRoute>
-        } />
-
         <Route path="/management/staff" element={
           <ProtectedRoute allowedRoles={['owner']}>
             <StaffManagement />
-          </ProtectedRoute>
-        } />
-
-        <Route path="/management/settings" element={
-          <ProtectedRoute allowedRoles={['owner']}>
-            <StoreSettings />
           </ProtectedRoute>
         } />
       </Routes>

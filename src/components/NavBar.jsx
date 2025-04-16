@@ -41,32 +41,12 @@ const NavBar = () => {
               </li>
             )}
             
-            {/* Management Dropdown - Only visible for appropriate roles */}
-            {user && (user.role === 'owner' || user.role === 'store_manager' || user.role === 'shift_manager') && (
+            {/* Management Dropdown - Only visible for owner role */}
+            {user && user.role === 'owner' && (
               <NavDropdown title={<><i className="bi bi-gear me-1"></i> Management</>} id="management-dropdown">
-                
-                {/* Inventory Management - Available to owners, store managers, and shift managers */}
-                <NavDropdown.Item as={Link} to="/management/inventory">
-                  <i className="bi bi-box me-1"></i> Inventory
+                <NavDropdown.Item as={Link} to="/management/staff">
+                  <i className="bi bi-people me-1"></i> Staff Management
                 </NavDropdown.Item>
-                
-                {/* Reports - Available to owners, store managers, and shift managers */}
-                <NavDropdown.Item as={Link} to="/management/reports">
-                  <i className="bi bi-graph-up me-1"></i> Reports
-                </NavDropdown.Item>
-                
-                {/* Store Settings - Only available to owners */}
-                {user.role === 'owner' && (
-                  <>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item as={Link} to="/management/staff">
-                      <i className="bi bi-people me-1"></i> Staff Management
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to="/management/settings">
-                      <i className="bi bi-sliders me-1"></i> Store Settings
-                    </NavDropdown.Item>
-                  </>
-                )}
               </NavDropdown>
             )}
           </ul>
@@ -88,7 +68,7 @@ const NavBar = () => {
                       <small className="ms-1 text-light-emphasis">[Operations Management]</small>
                     )}
                     {user.role === 'barista' && (
-                      <small className="ms-1 text-light-emphasis">[Inventory Status]</small>
+                      <small className="ms-1 text-light-emphasis">[Basic Access]</small>
                     )}
                   </span>
                 </li>
