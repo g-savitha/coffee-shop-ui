@@ -7,15 +7,19 @@ const RolesInfo = () => {
   const roles = [
     {
       name: 'Owner',
-      description: 'Has full access to all features.',
+      description: 'Has full access to all features and system administration.',
       rbacPermissions: [
-        'manage_products', 'update_availability'
+        'manage_products', 'update_availability', 'manage_staff', 'manage_prices', 
+        'view_reports', 'manage_store'
       ],
       canDo: [
         'Create new products',
         'Delete any product',
         'Modify any product',
         'Update product availability',
+        'Access financial reports',
+        'Manage staff accounts',
+        'Configure store settings',
         'Has all permissions by default'
       ],
       badgeColor: 'danger'
@@ -24,12 +28,16 @@ const RolesInfo = () => {
       name: 'Store Manager',
       description: 'Manages products and inventory.',
       rbacPermissions: [
-        'manage_products', 'update_availability'
+        'manage_products', 'update_availability', 'manage_prices', 
+        'view_reports', 'manage_schedule'
       ],
       canDo: [
         'Create new products',
         'Delete products',
-        'Update product availability'
+        'Update product availability',
+        'Modify product prices',
+        'View sales reports',
+        'Manage staff schedules'
       ],
       badgeColor: 'primary'
     },
@@ -37,10 +45,13 @@ const RolesInfo = () => {
       name: 'Shift Manager',
       description: 'Manages day-to-day operations.',
       rbacPermissions: [
-        'update_availability'
+        'update_availability', 'update_products', 'view_reports', 'manage_shift'
       ],
       canDo: [
         'Update product availability',
+        'Update product details (except prices)',
+        'View daily reports',
+        'Manage current shift',
         'Cannot create or delete products'
       ],
       badgeColor: 'success'
@@ -49,12 +60,13 @@ const RolesInfo = () => {
       name: 'Barista',
       description: 'Front-line staff with limited system access.',
       rbacPermissions: [
-        'update_availability'
+        'update_availability', 'view_products'
       ],
       canDo: [
         'View all products',
         'Update product availability (mark items as in/out of stock)',
-        'Cannot create or delete products'
+        'Cannot create, modify, or delete products',
+        'Cannot access reports or management features'
       ],
       badgeColor: 'info'
     }
@@ -74,7 +86,7 @@ const RolesInfo = () => {
             <strong>RBAC</strong>: Permissions are assigned to roles, and users inherit permissions from their role.
           </p>
 
-          <h5 className="mt-4">Available Roles:</h5>
+          <h5 className="mt-4">Available Roles (Highest to Lowest Privileges):</h5>
           <div className="d-flex flex-wrap mb-3">
             {roles.map((role, index) => (
               <Badge 
@@ -113,6 +125,15 @@ const RolesInfo = () => {
               </Accordion.Item>
             ))}
           </Accordion>
+          
+          <div className="alert alert-info mt-4">
+            <h6>Note on Feature Implementation:</h6>
+            <p className="small mb-0">
+              While the UI reflects these role distinctions, some features like reports, staff management, 
+              and price controls aren't fully implemented in the demo. The core permissions 
+              that are fully implemented include product management and availability controls.
+            </p>
+          </div>
         </Card.Body>
         <Card.Footer className="text-muted">
           <h6 className="mb-2">Test Accounts:</h6>

@@ -49,16 +49,16 @@ const NavBar = () => {
                     {user.username} ({user.role}) 
                     {/* Display active permissions based on role */}
                     {user.role === 'owner' && (
-                      <small className="ms-1 text-light-emphasis">[All Permissions]</small>
+                      <small className="ms-1 text-light-emphasis">[Full System Admin]</small>
                     )}
                     {user.role === 'store_manager' && (
-                      <small className="ms-1 text-light-emphasis">[Manage Products]</small>
+                      <small className="ms-1 text-light-emphasis">[Product & Price Management]</small>
                     )}
                     {user.role === 'shift_manager' && (
-                      <small className="ms-1 text-light-emphasis">[Update Availability]</small>
+                      <small className="ms-1 text-light-emphasis">[Operations Management]</small>
                     )}
                     {user.role === 'barista' && (
-                      <small className="ms-1 text-light-emphasis">[Update Availability]</small>
+                      <small className="ms-1 text-light-emphasis">[Inventory Status]</small>
                     )}
                   </span>
                 </li>
