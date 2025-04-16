@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api.jsx';
 import { getUser } from '../utils/auth.jsx';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaEdit, FaTrash, FaToggleOn } from 'react-icons/fa';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -9,6 +11,7 @@ const ProductList = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const user = getUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -59,6 +62,10 @@ const ProductList = () => {
     }
   };
 
+  const editProduct = (productId) => {
+    navigate(`/edit-product/${productId}`);
+  };
+
   if (loading) return <div className="text-center mt-5"><div className="spinner-border"></div></div>;
 
   return (
@@ -95,21 +102,35 @@ const ProductList = () => {
                 {product.limitedTimeOffer && <span className="badge bg-info text-dark ms-1">Limited</span>}
               </td>
               <td>
-                <button
-                  className="btn btn-sm btn-primary me-1"
-                  onClick={() => toggleAvailability(product.id, product.availability)}
-                >
-                  Toggle Availability
-                </button>
-
-                {(user.role === 'owner' || user.role === 'store_manager') && (
+                <div className="btn-group">
                   <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => deleteProduct(product.id)}
+                    className="btn btn-sm btn-outline-primary me-1"
+                    onClick={() => toggleAvailability(product.id, product.availability)}
+                    title="Toggle Availability"
                   >
-                    Delete
+                    <FaToggleOn />
                   </button>
-                )}
+
+                  {(user.role === 'owner' || user.role === 'store_manager' || user.role === 'shift_manager') && (
+                    <button
+                      className="btn btn-sm btn-outline-info me-1"
+                      onClick={() => editProduct(product.id)}
+                      title="Edit Product"
+                    >
+                      <FaEdit />
+                    </button>
+                  )}
+                  
+                  {(user.role === 'owner' || user.role === 'store_manager') && (
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => deleteProduct(product.id)}
+                      title="Delete Product"
+                    >
+                      <FaTrash />
+                    </button>
+                  )}
+                </div>
               </td>
             </tr>
           ))}

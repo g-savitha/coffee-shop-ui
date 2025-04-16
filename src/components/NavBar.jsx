@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logout, getUser } from '../utils/auth.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { Dropdown, NavDropdown } from 'react-bootstrap';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -38,6 +39,35 @@ const NavBar = () => {
                   <i className="bi bi-plus-circle me-1"></i> Add Product
                 </Link>
               </li>
+            )}
+            
+            {/* Management Dropdown - Only visible for appropriate roles */}
+            {user && (user.role === 'owner' || user.role === 'store_manager' || user.role === 'shift_manager') && (
+              <NavDropdown title={<><i className="bi bi-gear me-1"></i> Management</>} id="management-dropdown">
+                
+                {/* Inventory Management - Available to owners, store managers, and shift managers */}
+                <NavDropdown.Item as={Link} to="/management/inventory">
+                  <i className="bi bi-box me-1"></i> Inventory
+                </NavDropdown.Item>
+                
+                {/* Reports - Available to owners, store managers, and shift managers */}
+                <NavDropdown.Item as={Link} to="/management/reports">
+                  <i className="bi bi-graph-up me-1"></i> Reports
+                </NavDropdown.Item>
+                
+                {/* Store Settings - Only available to owners */}
+                {user.role === 'owner' && (
+                  <>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={Link} to="/management/staff">
+                      <i className="bi bi-people me-1"></i> Staff Management
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/management/settings">
+                      <i className="bi bi-sliders me-1"></i> Store Settings
+                    </NavDropdown.Item>
+                  </>
+                )}
+              </NavDropdown>
             )}
           </ul>
           <ul className="navbar-nav ms-auto">

@@ -224,7 +224,7 @@ const InventoryManagement = () => {
     return inventory.reduce((total, item) => total + (item.quantity * item.unitPrice), 0).toFixed(2);
   };
 
-  if (!['owner', 'manager'].includes(user.role)) {
+  if (!['owner', 'store_manager', 'shift_manager'].includes(user.role)) {
     return (
       <Alert variant="danger" className="mt-4">
         <h4 className="alert-heading">Access Denied</h4>
