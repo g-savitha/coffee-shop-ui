@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Card, Accordion, Table, Badge } from 'react-bootstrap';
 
+/**
+ * Component that displays information about the role-based access control system
+ */
 const RolesInfo = () => {
   const [activeKey, setActiveKey] = useState('0');
 
+  // Role definitions with permissions and capabilities
   const roles = [
     {
       name: 'Owner',
@@ -64,13 +68,23 @@ const RolesInfo = () => {
     }
   ];
 
+  // Test accounts for demonstration
+  const testAccounts = [
+    { role: 'Owner', username: 'owner', password: 'owner123' },
+    { role: 'Store Manager', username: 'manager', password: 'manager123' },
+    { role: 'Shift Manager', username: 'shift_lead', password: 'shift123' },
+    { role: 'Barista', username: 'barista', password: 'barista123' }
+  ];
+
   return (
     <div className="container my-4">
       <Card>
         <Card.Header as="h4" className="text-center bg-dark text-white">
           Role-Based Access Control System
         </Card.Header>
+        
         <Card.Body>
+          {/* Introduction */}
           <p className="lead">
             This application demonstrates Role-Based Access Control (RBAC).
           </p>
@@ -78,6 +92,7 @@ const RolesInfo = () => {
             <strong>RBAC</strong>: Permissions are assigned to roles, and users inherit permissions from their role.
           </p>
 
+          {/* Role Selection */}
           <h5 className="mt-4">Available Roles (Highest to Lowest Privileges):</h5>
           <div className="d-flex flex-wrap mb-3">
             {roles.map((role, index) => (
@@ -93,6 +108,7 @@ const RolesInfo = () => {
             ))}
           </div>
 
+          {/* Role Details Accordion */}
           <Accordion activeKey={activeKey} onSelect={(k) => setActiveKey(k)}>
             {roles.map((role, index) => (
               <Accordion.Item key={index} eventKey={index.toString()}>
@@ -118,6 +134,7 @@ const RolesInfo = () => {
             ))}
           </Accordion>
           
+          {/* Implementation Note */}
           <div className="alert alert-info mt-4">
             <h6>Note on Feature Implementation:</h6>
             <p className="small mb-0">
@@ -126,6 +143,8 @@ const RolesInfo = () => {
             </p>
           </div>
         </Card.Body>
+        
+        {/* Test Accounts */}
         <Card.Footer className="text-muted">
           <h6 className="mb-2">Test Accounts:</h6>
           <Table size="sm" bordered responsive>
@@ -137,26 +156,13 @@ const RolesInfo = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Owner</td>
-                <td>owner</td>
-                <td>owner123</td>
-              </tr>
-              <tr>
-                <td>Store Manager</td>
-                <td>manager</td>
-                <td>manager123</td>
-              </tr>
-              <tr>
-                <td>Shift Manager</td>
-                <td>shift_lead</td>
-                <td>shift123</td>
-              </tr>
-              <tr>
-                <td>Barista</td>
-                <td>barista</td>
-                <td>barista123</td>
-              </tr>
+              {testAccounts.map((account, index) => (
+                <tr key={index}>
+                  <td>{account.role}</td>
+                  <td>{account.username}</td>
+                  <td>{account.password}</td>
+                </tr>
+              ))}
             </tbody>
           </Table>
           <p className="small text-center mt-3">

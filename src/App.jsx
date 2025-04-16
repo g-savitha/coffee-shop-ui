@@ -10,17 +10,19 @@ import RolesInfo from './components/RolesInfo.jsx';
 import StaffManagement from './components/management/StaffManagement.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Protected route component
+/**
+ * Protected route component that handles authentication and role-based access
+ */
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
+  // Redirect to login if not authenticated
   if (!isAuthenticated()) {
     return <Navigate to="/login" />;
   }
   
-  // If roles are specified, check if the user has the required role
+  // Check for role-based access
   if (allowedRoles.length > 0) {
     const user = getUser();
     if (!allowedRoles.includes(user.role)) {
-      // Redirect to products page if user doesn't have permission
       return <Navigate to="/products" />;
     }
   }
@@ -33,10 +35,12 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
+        {/* Public Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Navigate to="/products" />} />
         <Route path="/roles-info" element={<RolesInfo />} />
 
+        {/* Product Routes */}
         <Route path="/products" element={
           <ProtectedRoute>
             <ProductList />
@@ -55,7 +59,7 @@ function App() {
           </ProtectedRoute>
         } />
 
-        {/* Management Routes */}
+        {/* Admin Routes */}
         <Route path="/management/staff" element={
           <ProtectedRoute allowedRoles={['owner']}>
             <StaffManagement />
