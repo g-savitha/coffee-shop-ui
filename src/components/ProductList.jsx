@@ -16,7 +16,7 @@ const ProductList = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await api.get('/api/products');
+      const response = await api.get('/products');
       setProducts(response.data);
       setLoading(false);
     } catch (err) {
@@ -27,7 +27,7 @@ const ProductList = () => {
 
   const toggleAvailability = async (productId, currentAvailability) => {
     try {
-      await api.patch(`/api/products/${productId}/availability`, {
+      await api.patch(`/products/${productId}/availability`, {
         availability: !currentAvailability
       });
 
@@ -49,7 +49,7 @@ const ProductList = () => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
 
     try {
-      await api.delete(`/api/products/${productId}`);
+      await api.delete(`/products/${productId}`);
       setProducts(products.filter(product => product.id !== productId));
       setSuccessMessage('Product deleted successfully!');
       setTimeout(() => setSuccessMessage(''), 3000);
