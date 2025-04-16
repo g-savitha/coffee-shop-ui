@@ -32,7 +32,7 @@ const ProductForm = () => {
     }
 
     try {
-      await api.post('/products', {
+      await api.post('/api/products', {
         ...product,
         price: parseFloat(product.price)
       });
